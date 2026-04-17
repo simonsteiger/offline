@@ -8,6 +8,49 @@
   text(size: 8pt, fill: luma(80))[Sidebar placeholder]
 }
 
+// Internal: styled section heading with accent bar and fading wash
+#let _section-heading(title, accent) = {
+  block(
+    width: 100%,
+    above: 1.2em,
+    below: 0.5em,
+    clip: false,
+    {
+      // Fading background wash
+      place(
+        top + left,
+        dx: 0pt,
+        dy: 0pt,
+        block(
+          width: 100%,
+          height: 1.6em,
+          fill: gradient.linear(
+            (accent.transparentize(80%), 0%),
+            (accent.transparentize(100%), 100%),
+            dir: ltr,
+          ),
+        ),
+      )
+      // Accent bar + label
+      stack(
+        dir: ltr,
+        spacing: 6pt,
+        rect(width: 3pt, height: 1.4em, fill: accent, radius: 1pt),
+        box(
+          inset: (top: 2pt),
+          text(
+            size: 8.5pt,
+            weight: "bold",
+            tracking: 1.5pt,
+            fill: luma(20),
+            smallcaps(title),
+          ),
+        ),
+      )
+    },
+  )
+}
+
 #let cv(
   name: "",
   title: "",

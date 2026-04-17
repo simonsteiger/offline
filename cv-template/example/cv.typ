@@ -6,4 +6,10 @@
   contact: (email: "jane@ki.se"),
 )
 
-Hello world.
+#_section-heading("Education", rgb("#4a7c8e"))
+
+Some content here.
+
+#_section-heading("Publications", rgb("#4a7c8e"))
+
+More content.
