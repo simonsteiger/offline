@@ -24,7 +24,7 @@
   set text(font: "Source Sans 3", size: 10pt, fill: luma(20))
   set par(leading: 0.6em)
 
-  // Full-width header placeholder
+  // Full-width header
   block(width: 100%, below: 1em)[
     #text(size: 22pt, weight: "bold")[#name] \
     #text(size: 10pt, fill: luma(50))[#title]
@@ -42,6 +42,7 @@
     // Sidebar column — accent rule on left, content bottom-aligned
     block(
       width: 100%,
+      height: 100%,
       stroke: (left: 0.5pt + accent),
       inset: (left: 8pt, right: 0pt, top: 0pt, bottom: 0pt),
       align(
