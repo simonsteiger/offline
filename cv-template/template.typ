@@ -26,18 +26,11 @@
 #let _resolve-icon(name, icon-path: none, size: 11pt, tint: rgb("#4a7c8e")) = {
   let key = lower(name)
 
-  // 1. Try custom SVG
+  // 1. Try custom SVG.
+  // NOTE: Typst 0.14 has no try/catch. If icon-path is set, every tool name
+  // must have a matching SVG in that directory, or the compile will fail.
   if icon-path != none {
-    let svg-path = icon-path + key + ".svg"
-    // typst panics if image() path doesn't exist, so we guard with a try
-    let result = {
-      // Use a state trick: attempt to load, catch via `panic` suppression
-      // In Typst 0.14, we use `image` inside a `context` — if it fails the
-      // compile errors. Instead, callers must ensure icons exist or set
-      // icon-path to none. Document this limitation in example/cv.typ.
-      image(svg-path, width: size, height: size)
-    }
-    return result
+    return image(icon-path + key + ".svg", width: size, height: size)
   }
 
   // 2. Try FontAwesome
