@@ -42,6 +42,27 @@
   return none
 }
 
+// Renders the contact line: icon + value pairs separated by thin spaces.
+// contact dict keys: email, phone, orcid, linkedin, website
+#let _contact-line(contact, accent, icon-path) = {
+  let items = ()
+  let keys = ("email", "phone", "orcid", "linkedin", "website")
+
+  for key in keys {
+    if key in contact and contact.at(key) != none {
+      let icon = _resolve-icon(key, icon-path: icon-path, size: 9pt, tint: accent)
+      let value = contact.at(key)
+      if icon != none {
+        items.push(box(stack(dir: ltr, spacing: 3pt, icon, text(size: 8pt)[#value])))
+      } else {
+        items.push(text(size: 8pt)[#value])
+      }
+    }
+  }
+
+  items.join(h(1em))
+}
+
 // Sidebar state — skills and languages accumulate here
 #let _cv-sidebar = state("_cv-sidebar", ())
 
@@ -110,10 +131,15 @@
   set par(leading: 0.6em)
 
   // Full-width header
-  block(width: 100%, below: 1em)[
-    #text(size: 22pt, weight: "bold")[#name] \
-    #text(size: 10pt, fill: luma(50))[#title]
-  ]
+  block(width: 100%, below: 1.2em, {
+    text(size: 22pt, weight: "bold")[#name]
+    v(0.1em)
+    text(size: 10.5pt, fill: luma(40))[#title]
+    if contact.len() > 0 {
+      v(0.3em)
+      _contact-line(contact, accent, icon-path)
+    }
+  })
 
   // Two-column body
   let sidebar-width = 30%
