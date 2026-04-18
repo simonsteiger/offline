@@ -114,6 +114,26 @@
   )
 }
 
+#let education(..entries) = {
+  _section-heading("Education", rgb("#4a7c8e"))
+  for entry in entries.pos() {
+    block(above: 0.4em, below: 0.2em, {
+      grid(
+        columns: (1fr, auto),
+        text(weight: "bold")[#entry.degree],
+        if "years" in entry { text(fill: luma(50), size: 9pt)[#entry.years] },
+      )
+      if "institution" in entry {
+        text(fill: luma(40), size: 9pt)[#entry.institution]
+      }
+      if "description" in entry and entry.description != none {
+        v(0.2em)
+        text(size: 9pt)[#entry.description]
+      }
+    })
+  }
+}
+
 #let cv(
   name: "",
   title: "",

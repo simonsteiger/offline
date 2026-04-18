@@ -11,10 +11,7 @@
   ),
 )
 
-#_section-heading("Education", rgb("#4a7c8e"))
-
-Some content here.
-
-#_section-heading("Publications", rgb("#4a7c8e"))
-
-More content.
+#education(
+  (degree: "PhD, Public Health", institution: "Karolinska Institutet", years: "2021–"),
+  (degree: "MSc Epidemiology", institution: "Stockholm University", years: "2019"),
+)
