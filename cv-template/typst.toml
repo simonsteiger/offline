@@ -1,7 +1,0 @@
-[package]
-name = "academic-cv"
-version = "0.1.0"
-entrypoint = "template.typ"
-authors = []
-license = "MIT"
-description = "A modern academic CV template for public health and social sciences researchers."
