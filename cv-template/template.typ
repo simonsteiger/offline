@@ -66,9 +66,50 @@
 // Sidebar state — skills and languages accumulate here
 #let _cv-sidebar = state("_cv-sidebar", ())
 
-// Internal: render accumulated sidebar content (implemented in later tasks)
+// Internal: render accumulated sidebar content
 #let _render-sidebar(items, accent: rgb("#4a7c8e"), icon-path: none) = {
-  text(size: 8pt, fill: luma(80))[Sidebar placeholder]
+  let content = ()
+
+  for item in items {
+    if item.kind == "skills" {
+      content.push(block(below: 0.8em, {
+        text(size: 7.5pt, weight: "bold", tracking: 1.2pt, fill: luma(50),
+          smallcaps("Skills"))
+        v(0.4em)
+        for entry in item.entries {
+          text(size: 7.5pt, fill: luma(40), tracking: 0.5pt)[#entry.category]
+          v(0.2em)
+          for tool in entry.tools {
+            let icon = _resolve-icon(tool, icon-path: icon-path, size: 9pt, tint: accent)
+            block(above: 0.15em, {
+              if icon != none {
+                stack(dir: ltr, spacing: 4pt, icon, text(size: 8.5pt)[#tool])
+              } else {
+                text(size: 8.5pt)[#tool]
+              }
+            })
+          }
+          v(0.3em)
+        }
+      }))
+    } else if item.kind == "languages" {
+      content.push(block(below: 0.8em, {
+        text(size: 7.5pt, weight: "bold", tracking: 1.2pt, fill: luma(50),
+          smallcaps("Languages"))
+        v(0.4em)
+        for entry in item.entries {
+          block(above: 0.2em, {
+            text(size: 8.5pt, weight: "bold")[#entry.language]
+            text(size: 8pt, fill: luma(50))[ · #entry.level]
+          })
+        }
+      }))
+    }
+  }
+
+  if content.len() > 0 {
+    stack(dir: ttb, spacing: 0.5em, ..content)
+  }
 }
 
 // Internal: styled section heading with accent bar and fading wash
@@ -262,6 +303,14 @@
       })
     }
   }
+}
+
+#let skills(..entries) = {
+  _cv-sidebar.update(s => s + ((kind: "skills", entries: entries.pos()),))
+}
+
+#let languages(..entries) = {
+  _cv-sidebar.update(s => s + ((kind: "languages", entries: entries.pos()),))
 }
 
 #let cv(

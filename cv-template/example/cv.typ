@@ -45,3 +45,14 @@
 )
 
 #references(note: "Available on request")
+
+#skills(
+  (category: "Statistical",  tools: ("R", "SPSS", "Stata")),
+  (category: "Programming",  tools: ("Python", "Julia")),
+  (category: "Software",     tools: ("Zotero",)),
+)
+
+#languages(
+  (language: "Swedish", level: "Native"),
+  (language: "English", level: "Fluent"),
+)
