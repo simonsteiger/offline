@@ -2,6 +2,6 @@
 name = "lekplats"
 version = "0.1.0"
 entrypoint = "template.typ"
-authors = []
+authors = ["Simon Steiger"]
 license = "MIT"
 description = "A CV template for the academic application minigame (real life edition)."
