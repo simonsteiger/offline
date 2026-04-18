@@ -222,6 +222,48 @@
   }
 }
 
+#let grants-and-awards(..entries) = {
+  _section-heading("Grants & Awards", rgb("#4a7c8e"))
+  for entry in entries.pos() {
+    block(above: 0.4em, below: 0.2em, {
+      grid(
+        columns: (1fr, auto),
+        {
+          text(weight: "bold")[#entry.title]
+          if "funder" in entry {
+            text(fill: luma(40), size: 9pt)[ · #entry.funder]
+          }
+        },
+        if "year" in entry { text(fill: luma(50), size: 9pt)[#entry.year] },
+      )
+    })
+  }
+}
+
+#let references(note: none, ..entries) = {
+  _section-heading("References", rgb("#4a7c8e"))
+  if note != none {
+    block(above: 0.4em, below: 0.2em)[#note]
+  } else {
+    for entry in entries.pos() {
+      block(above: 0.4em, below: 0.2em, {
+        text(weight: "bold")[#entry.name]
+        if "title" in entry {
+          linebreak()
+          text(fill: luma(40), size: 9pt)[#entry.title]
+          if "institution" in entry {
+            text(fill: luma(40), size: 9pt)[ · #entry.institution]
+          }
+        }
+        if "email" in entry {
+          linebreak()
+          text(size: 9pt)[#entry.email]
+        }
+      })
+    }
+  }
+}
+
 #let cv(
   name: "",
   title: "",

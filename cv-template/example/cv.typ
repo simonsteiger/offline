@@ -38,3 +38,10 @@
    title: "Prevalence of Z among Swedish adults.",
    journal: "Scand J Public Health"),
 )
+
+#grants-and-awards(
+  (title: "KI Research Grant", funder: "Karolinska Institutet", year: "2022"),
+  (title: "Best Poster Award", funder: "Nordic Epi Conference", year: "2023"),
+)
+
+#references(note: "Available on request")
