@@ -1,5 +1,54 @@
 // template.typ
 
+#import "@preview/fontawesome:0.5.0": fa-icon
+
+// Map from tool name (lowercase) to FontAwesome icon name.
+// Extend as needed. Tools not in this table fall back to plain text.
+#let _fa-map = (
+  "r": "r-project",
+  "python": "python",
+  "julia": none,        // no FA glyph — text fallback
+  "git": "git-alt",
+  "github": "github",
+  "spss": none,
+  "stata": none,
+  "zotero": none,
+  "email": "envelope",
+  "phone": "phone",
+  "orcid": "orcid",
+  "linkedin": "linkedin",
+  "website": "globe",
+)
+
+// Returns content: SVG image, FA glyph, or empty (for text-only fallback).
+// size: length for the icon box
+// tint: color applied to FA icons (SVGs are rendered as-is)
+#let _resolve-icon(name, icon-path: none, size: 11pt, tint: rgb("#4a7c8e")) = {
+  let key = lower(name)
+
+  // 1. Try custom SVG
+  if icon-path != none {
+    let svg-path = icon-path + key + ".svg"
+    // typst panics if image() path doesn't exist, so we guard with a try
+    let result = {
+      // Use a state trick: attempt to load, catch via `panic` suppression
+      // In Typst 0.14, we use `image` inside a `context` — if it fails the
+      // compile errors. Instead, callers must ensure icons exist or set
+      // icon-path to none. Document this limitation in example/cv.typ.
+      image(svg-path, width: size, height: size)
+    }
+    return result
+  }
+
+  // 2. Try FontAwesome
+  if key in _fa-map and _fa-map.at(key) != none {
+    return text(size: size, fill: tint, fa-icon(_fa-map.at(key)))
+  }
+
+  // 3. Empty — caller renders name as plain text
+  return none
+}
+
 // Sidebar state — skills and languages accumulate here
 #let _cv-sidebar = state("_cv-sidebar", ())
 
