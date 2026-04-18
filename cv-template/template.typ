@@ -66,6 +66,9 @@
 // Sidebar state — skills and languages accumulate here
 #let _cv-sidebar = state("_cv-sidebar", ())
 
+// Accent color state — set by cv(), read by block functions
+#let _cv-accent = state("_cv-accent", rgb("#4a7c8e"))
+
 // Internal: render accumulated sidebar content
 #let _render-sidebar(items, accent: rgb("#4a7c8e"), icon-path: none) = {
   let content = ()
@@ -156,7 +159,7 @@
 }
 
 #let education(..entries) = {
-  _section-heading("Education", rgb("#4a7c8e"))
+  context _section-heading("Education", _cv-accent.get())
   for entry in entries.pos() {
     block(above: 0.4em, below: 0.2em, {
       grid(
@@ -176,7 +179,7 @@
 }
 
 #let research-experience(..entries) = {
-  _section-heading("Research Experience", rgb("#4a7c8e"))
+  context _section-heading("Research Experience", _cv-accent.get())
   for entry in entries.pos() {
     block(above: 0.4em, below: 0.2em, {
       grid(
@@ -196,7 +199,7 @@
 }
 
 #let teaching(..entries) = {
-  _section-heading("Teaching", rgb("#4a7c8e"))
+  context _section-heading("Teaching", _cv-accent.get())
   for entry in entries.pos() {
     block(above: 0.4em, below: 0.2em, {
       grid(
@@ -219,7 +222,7 @@
 }
 
 #let conference-presentations(..entries) = {
-  _section-heading("Conference Presentations", rgb("#4a7c8e"))
+  context _section-heading("Conference Presentations", _cv-accent.get())
   for entry in entries.pos() {
     block(above: 0.4em, below: 0.2em, {
       grid(
@@ -238,7 +241,7 @@
 }
 
 #let publications(heading: none, ..entries) = {
-  _section-heading("Publications", rgb("#4a7c8e"))
+  context _section-heading("Publications", _cv-accent.get())
   if heading != none {
     text(size: 9pt, weight: "bold", style: "italic")[#heading]
     v(0.3em)
@@ -264,7 +267,7 @@
 }
 
 #let grants-and-awards(..entries) = {
-  _section-heading("Grants & Awards", rgb("#4a7c8e"))
+  context _section-heading("Grants & Awards", _cv-accent.get())
   for entry in entries.pos() {
     block(above: 0.4em, below: 0.2em, {
       grid(
@@ -282,7 +285,7 @@
 }
 
 #let references(note: none, ..entries) = {
-  _section-heading("References", rgb("#4a7c8e"))
+  context _section-heading("References", _cv-accent.get())
   if note != none {
     block(above: 0.4em, below: 0.2em)[#note]
   } else {
@@ -321,6 +324,8 @@
   icon-path: none,
   body,
 ) = {
+  _cv-accent.update(_ => accent)
+
   // Page
   set page(
     paper: "a4",
