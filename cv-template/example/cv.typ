@@ -28,3 +28,13 @@
 #conference-presentations(
   (title: "Effect of X on Y", event: "Nordic Public Health Conference", year: "2023", location: "Oslo"),
 )
+
+#publications(
+  heading: "Journal Articles",
+  (authors: "Andersson J, Smith B", year: "2023",
+   title: "Effect of X on Y in a large cohort.",
+   journal: "J Public Health", doi: "10.1000/xyz"),
+  (authors: "Andersson J et al.", year: "2022",
+   title: "Prevalence of Z among Swedish adults.",
+   journal: "Scand J Public Health"),
+)

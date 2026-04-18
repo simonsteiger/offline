@@ -196,6 +196,32 @@
   }
 }
 
+#let publications(heading: none, ..entries) = {
+  _section-heading("Publications", rgb("#4a7c8e"))
+  if heading != none {
+    text(size: 9pt, weight: "bold", style: "italic")[#heading]
+    v(0.3em)
+  }
+  for entry in entries.pos() {
+    block(above: 0.4em, below: 0.2em, {
+      grid(
+        columns: (1fr, auto),
+        {
+          text(size: 9pt)[#entry.authors]
+          text(size: 9pt)[ (#entry.year). ]
+          text(size: 9pt, style: "italic")[#entry.title]
+          if "journal" in entry {
+            text(size: 9pt, fill: luma(40))[ #entry.journal.]
+          }
+        },
+        if "doi" in entry and entry.doi != none {
+          text(size: 8pt, fill: luma(60))[DOI]
+        },
+      )
+    })
+  }
+}
+
 #let cv(
   name: "",
   title: "",
