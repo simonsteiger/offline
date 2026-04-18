@@ -29,6 +29,7 @@
   // 1. Try custom SVG.
   // NOTE: Typst 0.14 has no try/catch. If icon-path is set, every tool name
   // must have a matching SVG in that directory, or the compile will fail.
+  // icon-path MUST end with a trailing slash, e.g. "icons/" not "icons".
   if icon-path != none {
     return image(icon-path + key + ".svg", width: size, height: size)
   }
