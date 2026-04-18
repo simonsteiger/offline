@@ -1,26 +1,3 @@
-// template.typ
-
-#import "@preview/fontawesome:0.5.0": fa-icon
-
-// Map from tool name (lowercase) to FontAwesome icon name.
-// Extend as needed. Tools not in this table fall back to plain text.
-#let _fa-map = (
-  "r": "r-project",
-  "python": "python",
-  "julia": none, // no FA glyph — text fallback
-  "git": "git-alt",
-  "github": "github",
-  "spss": none,
-  "stata": none,
-  "zotero": none,
-  "email": "envelope",
-  "phone": "phone",
-  "orcid": "orcid",
-  "linkedin": "linkedin",
-  "website": "globe",
-)
-
-// Render this in the top right corner as a little box?
 #let _contact-line(contact, accent, icon-path) = {
   let items = ()
   let keys = ("email", "phone", "orcid", "linkedin", "website")
@@ -37,10 +14,8 @@
   items
 }
 
-// Accent color state — set by cv(), read by block functions
 #let _cv-accent = state("_cv-accent", rgb("#4a7c8e"))
 
-// Internal: styled section heading with accent bar and fading wash
 #let _section-heading(title, accent) = {
   block(
     width: 100%,
