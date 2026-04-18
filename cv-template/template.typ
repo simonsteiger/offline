@@ -134,6 +134,68 @@
   }
 }
 
+#let research-experience(..entries) = {
+  _section-heading("Research Experience", rgb("#4a7c8e"))
+  for entry in entries.pos() {
+    block(above: 0.4em, below: 0.2em, {
+      grid(
+        columns: (1fr, auto),
+        text(weight: "bold")[#entry.role],
+        if "years" in entry { text(fill: luma(50), size: 9pt)[#entry.years] },
+      )
+      if "institution" in entry {
+        text(fill: luma(40), size: 9pt)[#entry.institution]
+      }
+      if "description" in entry and entry.description != none {
+        v(0.2em)
+        text(size: 9pt)[#entry.description]
+      }
+    })
+  }
+}
+
+#let teaching(..entries) = {
+  _section-heading("Teaching", rgb("#4a7c8e"))
+  for entry in entries.pos() {
+    block(above: 0.4em, below: 0.2em, {
+      grid(
+        columns: (1fr, auto),
+        text(weight: "bold")[#entry.role],
+        if "years" in entry { text(fill: luma(50), size: 9pt)[#entry.years] },
+      )
+      if "course" in entry {
+        text(fill: luma(40), size: 9pt)[#entry.course]
+        if "institution" in entry {
+          text(fill: luma(40), size: 9pt)[ · #entry.institution]
+        }
+      }
+      if "description" in entry and entry.description != none {
+        v(0.2em)
+        text(size: 9pt)[#entry.description]
+      }
+    })
+  }
+}
+
+#let conference-presentations(..entries) = {
+  _section-heading("Conference Presentations", rgb("#4a7c8e"))
+  for entry in entries.pos() {
+    block(above: 0.4em, below: 0.2em, {
+      grid(
+        columns: (1fr, auto),
+        text(weight: "bold")[#entry.title],
+        if "year" in entry { text(fill: luma(50), size: 9pt)[#entry.year] },
+      )
+      let details = ()
+      if "event" in entry { details.push(entry.event) }
+      if "location" in entry { details.push(entry.location) }
+      if details.len() > 0 {
+        text(fill: luma(40), size: 9pt)[#details.join(" · ")]
+      }
+    })
+  }
+}
+
 #let cv(
   name: "",
   title: "",

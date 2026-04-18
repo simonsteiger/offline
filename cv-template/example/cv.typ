@@ -15,3 +15,16 @@
   (degree: "PhD, Public Health", institution: "Karolinska Institutet", years: "2021–"),
   (degree: "MSc Epidemiology", institution: "Stockholm University", years: "2019"),
 )
+
+#research-experience(
+  (role: "Research Assistant", institution: "Karolinska Institutet", years: "2020–2021",
+   description: "Assisted with data collection for a longitudinal cohort study."),
+)
+
+#teaching(
+  (role: "Teaching Assistant", course: "Epidemiology I", institution: "KI", years: "2022–"),
+)
+
+#conference-presentations(
+  (title: "Effect of X on Y", event: "Nordic Public Health Conference", year: "2023", location: "Oslo"),
+)
