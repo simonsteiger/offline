@@ -2,49 +2,48 @@
 
 #show: cv.with(
   name: "Solomon Grundy",
-  title: "Supervillain and Antihero",
+  description: lorem(30),
   contact: (
     email: "solomon@grundy.xyz",
-    phone: "+01 70 000 0000",
-    orcid: "0000-0001-2345-6789",
+    linkedin: "linkedin.com/in/steigers",
     website: "www.bornonmonday.xyz",
   ),
   accent: rgb("#4a7c8e"),
-  icon-path: none,
+  icon-path: "example/icons/",
 )
 
 #education(
   (
-    degree: "PhD, Archvillain",
+    name: "PhD, Archvillain",
     institution: "Bane Academy",
-    years: "2021-",
+    date: "2021-",
     description: "Thesis title: How to annoy Batman",
   ),
   (
-    degree: "MSc Villainism",
+    name: "MSc Villainism",
     institution: "Arkham City University",
     description: "Thesis title: Know your poems",
-    years: "2019-2021",
+    date: "2019-2021",
   ),
   (
-    degree: "BSc Public Nuisance",
+    name: "BSc Public Nuisance",
     institution: "Arkham City University",
     description: "Thesis title: Born on Monday, died on Tuesday",
-    years: "2017-2019",
+    date: "2017-2019",
   ),
 )
 
 #research-experience(
   (
-    role: "PhD Researcher",
+    name: "PhD Researcher",
     institution: "Bane Academy",
-    years: "2021–",
+    date: "2021–",
     description: "Investigating strategies to exploit deontistic vigilante superheroes.",
   ),
   (
-    role: "Research Assistant",
+    name: "Research Assistant",
     institution: "Arkham City University",
-    years: "2019–2021",
+    date: "2019–2021",
     description: "Laboratory management and statistical analysis for a longitudinal cohort study of bats.",
   ),
 )
@@ -52,48 +51,49 @@
 #publications("example/bibliography.bib", style: "apa")
 
 #grants-and-awards(
-  (title: "Criminal Prodigy Research Grant", amount: "10,000€", year: "2024", description: "Awarded by Bane Academy."),
+  (title: "Criminal Prodigy Research Grant", amount: "10,000€", date: "2024", description: "Awarded by Bane Academy."),
   (
     title: "Best Explosive Contraption Award",
     amount: "150€",
-    year: "2023",
+    date: "2023",
     description: "Built an explosive batarang in under 30 minutes.",
   ),
 )
 
 #teaching(
   (
-    course: "Antagonism I",
+    name: "Antagonism I",
     institution: "Bane Academy",
-    years: "2022–",
+    date: "2022–",
     description: "Teaching this course every year to Bachelor students.",
   ),
   (
-    course: "Explosive contraptions for dummies",
+    name: "Explosive contraptions for dummies",
     institution: "Gotham Institute",
-    years: "2023",
+    date: "2023",
     description: "Taught this course as a guest lecturer.",
   ),
 )
 
 #conference-presentations(
   (
-    title: "Neighbourhood deprivation drives villainry: new evidence from Gotham City",
+    name: "Neighbourhood deprivation drives villainry: new evidence from Gotham City",
     event: "International Conference of Villains",
-    year: "2023",
-    location: "Gotham City",
+    date: "2023",
+    institution: "Gotham City",
   ),
   (
-    title: "Tricking superheroes: what you need to know",
+    name: "Tricking superheroes: what you need to know",
     event: "Congress of Deception",
-    year: "2022",
-    location: "Arkham City",
+    date: "2022",
+    institution: "Arkham City",
   ),
 )
 
 #references(
   (
     name: "Joker",
+    title: "Prof. Dr.",
     institution: "None of your business",
     email: "iwillfindyou@first.com",
   ),

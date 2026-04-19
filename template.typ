@@ -6,12 +6,13 @@
   for key in keys {
     if key in contact and contact.at(key) != none {
       let value = contact.at(key)
-      items.push(grid.cell(x: 1, y: y, text(size: 9pt, value)))
+      let icon = image(icon-path + key + ".svg", height: 1.25em) // TODO must check if path exists!
+      items.push(stack(dir: ltr, spacing: 0.3em, icon, align(horizon, text(size: 9pt, value))))
       y += 1
     }
   }
 
-  items
+  stack(dir: ttb, spacing: 0.5em, ..items)
 }
 
 #let _cv-accent = state("_cv-accent", rgb("#4a7c8e"))
@@ -52,13 +53,13 @@
   for entry in entries.pos() {
     block(inset: (left: 1em, y: 0.25em), {
       grid(
-        columns: (50%, 35%, 15%),
+        columns: (60%, 15%, 25%),
         rows: 2,
         column-gutter: 1em,
         row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, strong(entry.degree)),
-        grid.cell(x: 1, y: 0, text(size: 9pt, entry.institution)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.years)),
+        grid.cell(x: 0, y: 0, colspan: 2, strong(entry.name)),
+        grid.cell(x: 2, y: 1, text(size: 9pt, entry.institution)),
+        grid.cell(x: 2, y: 0, text(size: 9pt, entry.date)),
         grid.cell(x: 0, y: 1, if "description" in entry and entry.description != none {
           text(size: 9pt, entry.description)
         }),
@@ -72,13 +73,13 @@
   for entry in entries.pos() {
     block(inset: (left: 1em, y: 0.25em), {
       grid(
-        columns: (50%, 35%, 15%),
+        columns: (60%, 15%, 25%),
         rows: 2,
         column-gutter: 1em,
         row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, strong(entry.role)),
-        grid.cell(x: 1, y: 0, text(size: 9pt, entry.institution)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.years)),
+        grid.cell(x: 0, y: 0, colspan: 2, strong(entry.name)),
+        grid.cell(x: 2, y: 1, text(size: 9pt, entry.institution)),
+        grid.cell(x: 2, y: 0, text(size: 9pt, entry.date)),
         grid.cell(x: 0, y: 1, if "description" in entry and entry.description != none {
           text(size: 9pt, entry.description)
         }),
@@ -92,13 +93,13 @@
   for entry in entries.pos() {
     block(inset: (left: 1em, y: 0.25em), {
       grid(
-        columns: (50%, 35%, 15%),
+        columns: (60%, 15%, 25%),
         rows: 2,
         column-gutter: 1em,
         row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, strong(entry.course)),
-        grid.cell(x: 1, y: 0, text(size: 9pt, entry.institution)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.years)),
+        grid.cell(x: 0, y: 0, colspan: 2, strong(entry.name)),
+        grid.cell(x: 2, y: 1, text(size: 9pt, entry.institution)),
+        grid.cell(x: 2, y: 0, text(size: 9pt, entry.date)),
         grid.cell(x: 0, y: 1, if "description" in entry and entry.description != none {
           text(size: 9pt, entry.description)
         }),
@@ -112,13 +113,14 @@
   for entry in entries.pos() {
     block(inset: (left: 1em, y: 0.25em), {
       grid(
-        columns: (50%, 35%, 15%),
+        columns: (60%, 15%, 25%),
         rows: 2,
         column-gutter: 1em,
         row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, colspan: 2, strong(entry.title)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.year)),
-        grid.cell(x: 0, y: 1, text(size: 9pt, entry.event + ", " + entry.location)),
+        grid.cell(x: 0, y: 0, strong(entry.name)),
+        grid.cell(x: 2, y: 0, text(size: 9pt, align(bottom, entry.date))),
+        grid.cell(x: 2, y: 1, text(size: 9pt, entry.institution)),
+        grid.cell(x: 0, y: 1, text(size: 9pt, entry.event)),
       )
     })
   }
@@ -126,7 +128,6 @@
 
 #let publications(bib-path, ..args) = {
   context _section-heading("Publications", _cv-accent.get())
-  set text(size: 9pt)
   block(inset: (left: 1em, y: 0.25em), bibliography(bib-path, full: true, title: none, ..args))
 }
 
@@ -135,13 +136,13 @@
   for entry in entries.pos() {
     block(inset: (left: 1em, y: 0.25em), {
       grid(
-        columns: (50%, 35%, 15%),
+        columns: (60%, 15%, 25%),
         rows: 2,
         column-gutter: 1em,
         row-gutter: 0.75em,
         grid.cell(x: 0, y: 0, strong(entry.title)),
         grid.cell(x: 1, y: 0, text(size: 9pt, entry.amount)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.year)),
+        grid.cell(x: 2, y: 0, text(size: 9pt, entry.date)),
         grid.cell(x: 0, y: 1, if "description" in entry and entry.description != none {
           text(size: 9pt, entry.description)
         }),
@@ -155,13 +156,13 @@
   for entry in entries.pos() {
     block(inset: (left: 1em, y: 0.25em), {
       grid(
-        columns: (50%, 35%, 15%),
-        rows: 2,
+        columns: 1,
+        rows: 3,
         column-gutter: 1em,
         row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, strong(entry.name)),
-        grid.cell(x: 1, y: 0, text(size: 9pt, entry.institution)),
-        grid.cell(x: 0, y: 1, text(size: 9pt, entry.email)),
+        grid.cell(x: 0, y: 0, strong(entry.name) + ", " + entry.title),
+        grid.cell(x: 0, y: 1, text(size: 9pt, entry.institution)),
+        grid.cell(x: 0, y: 2, text(size: 9pt, entry.email)),
       )
     })
   }
@@ -169,7 +170,7 @@
 
 #let cv(
   name: "",
-  title: "",
+  description: "",
   contact: (:),
   accent: rgb("#4a7c8e"),
   icon-path: none,
@@ -191,17 +192,19 @@
   set text(font: "Helvetica Neue", size: 10pt, fill: luma(20), tracking: 0.3pt)
   set par(leading: 0.6em)
 
+
   grid(
-    columns: (1fr, auto),
+    columns: (70%, 5%, 25%),
     rows: contact.len(),
-    row-gutter: 0.75em,
+    column-gutter: 1em,
+    row-gutter: 0.25em,
     grid.cell(x: 0, y: 0, rowspan: contact.len(), align(horizon, stack(
       dir: ttb,
       spacing: 12pt,
       text(size: 20pt, weight: "bold", name),
-      text(size: 16pt, title),
+      text(size: 10pt, description),
     ))),
-    .._contact-line(contact, accent, icon-path),
+    grid.cell(x: 2, y: 0, rowspan: contact.len(), _contact-line(contact, accent, icon-path))
   )
 
   body
