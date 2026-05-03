@@ -2,7 +2,6 @@
 
 #show: cv.with(
   name: "Solomon Grundy",
-  description: lorem(30),
   contact: (
     email: "solomon@grundy.xyz",
     linkedin: "linkedin.com/in/steigers",
@@ -12,7 +11,8 @@
   icon-path: "example/icons/",
 )
 
-#education(
+#section(
+  "Education",
   (
     name: "PhD, Archvillain",
     institution: "Bane Academy",
@@ -33,7 +33,8 @@
   ),
 )
 
-#research-experience(
+#section(
+  "Research",
   (
     name: "PhD Researcher",
     institution: "Bane Academy",
@@ -50,17 +51,22 @@
 
 #publications("example/bibliography.bib", style: "apa")
 
-#grants-and-awards(
-  (title: "Criminal Prodigy Research Grant", amount: "10,000€", date: "2024", description: "Awarded by Bane Academy."),
+#section(
+  "Grants",
   (
-    title: "Best Explosive Contraption Award",
-    amount: "150€",
+    name: "Criminal Prodigy Research Grant",
+    date: "2024",
+    description: "10,000€ – Awarded by Bane Academy.",
+  ),
+  (
+    name: "Best Explosive Contraption Award",
     date: "2023",
-    description: "Built an explosive batarang in under 30 minutes.",
+    description: "150€ – Built an explosive batarang in under 30 minutes.",
   ),
 )
 
-#teaching(
+#section(
+  "Teaching",
   (
     name: "Antagonism I",
     institution: "Bane Academy",
@@ -75,7 +81,8 @@
   ),
 )
 
-#conference-presentations(
+#section(
+  "Conferences",
   (
     name: "Neighbourhood deprivation drives villainry: new evidence from Gotham City",
     event: "International Conference of Villains",

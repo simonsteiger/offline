@@ -7,132 +7,64 @@
     if key in contact and contact.at(key) != none {
       let value = contact.at(key)
       let icon = image(icon-path + key + ".svg", height: 1.25em) // TODO must check if path exists!
-      items.push(stack(dir: ltr, spacing: 0.3em, icon, align(horizon, text(size: 9pt, value))))
+      items.push(stack(dir: ltr, spacing: 0.3em, align(horizon + right, text(size: 9pt, value)), icon))
       y += 1
     }
   }
 
-  stack(dir: ttb, spacing: 0.5em, ..items)
+  stack(dir: ttb, spacing: 0.25em, ..items)
 }
 
-#let _cv-accent = state("_cv-accent", rgb("#4a7c8e"))
+#let build-entries-cells(..entries, rows-per-entry: 3) = {
+  let items = ()
+  let y = 1
 
-#let _section-heading(title, accent) = {
-  block(
-    width: 100%,
-    above: 2em,
-    below: 1em,
-    clip: false,
-    {
-      set align(horizon)
-      // Fading background wash
-      block(
-        width: 100%,
-        height: 2em,
-        inset: (left: 10pt),
-        radius: 2pt,
-        fill: gradient.linear(
-          (accent.transparentize(20%), 0%),
-          (accent.transparentize(80%), 1%),
-          (accent.transparentize(100%), 80%),
-          (accent.transparentize(100%), 100%),
-          dir: ltr,
-        ),
-        text(
-          weight: "bold",
-          fill: luma(20),
-          title,
-        ),
-      )
-    },
-  )
-}
-
-#let education(..entries) = {
-  context _section-heading("Education", _cv-accent.get())
   for entry in entries.pos() {
-    block(inset: (left: 1em, y: 0.25em), {
-      grid(
-        columns: (60%, 15%, 25%),
-        rows: 2,
-        column-gutter: 1em,
-        row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, colspan: 2, strong(entry.name)),
-        grid.cell(x: 2, y: 1, text(size: 9pt, entry.institution)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.date)),
-        grid.cell(x: 0, y: 1, if "description" in entry and entry.description != none {
-          text(size: 9pt, entry.description)
-        }),
-      )
-    })
+    let has-description = "description" in entry and entry.description != none
+    let has-institution = "institution" in entry and entry.institution != none
+
+    let title-text = strong(entry.name) + if has-institution { text(9pt, " | " + entry.institution) }
+    let date-text = align(right, text(9pt, entry.date))
+    let description-text = if has-description { text(9pt, entry.description) } else { none }
+
+    items.push(grid.cell(x: 1, y: (y - 1) * rows-per-entry, align(bottom, title-text)))
+    items.push(grid.cell(x: 2, y: (y - 1) * rows-per-entry, date-text))
+    items.push(grid.cell(x: 1, y: 1 + (y - 1) * rows-per-entry, description-text))
+
+    y += 1
   }
+
+  items
 }
 
-#let research-experience(..entries) = {
-  context _section-heading("Research Experience", _cv-accent.get())
-  for entry in entries.pos() {
-    block(inset: (left: 1em, y: 0.25em), {
-      grid(
-        columns: (60%, 15%, 25%),
-        rows: 2,
-        column-gutter: 1em,
-        row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, colspan: 2, strong(entry.name)),
-        grid.cell(x: 2, y: 1, text(size: 9pt, entry.institution)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.date)),
-        grid.cell(x: 0, y: 1, if "description" in entry and entry.description != none {
-          text(size: 9pt, entry.description)
-        }),
-      )
-    })
-  }
+#let entries-block(..entries, title: none, rows-per-entry: 3) = {
+  block(inset: (y: 0.25em), {
+    grid(
+      columns: (11em, 1fr, 5em),
+      rows: (rows-per-entry * entries.pos().len()) - 1,
+      column-gutter: 1em,
+      row-gutter: 0.75em,
+      grid.cell(x: 0, y: 0, text(size: 18pt, font: "Cronos Pro", smallcaps(title))),
+      ..build-entries-cells(..entries, rows-per-entry: rows-per-entry),
+    )
+  })
 }
 
-#let teaching(..entries) = {
-  context _section-heading("Teaching", _cv-accent.get())
-  for entry in entries.pos() {
-    block(inset: (left: 1em, y: 0.25em), {
-      grid(
-        columns: (60%, 15%, 25%),
-        rows: 2,
-        column-gutter: 1em,
-        row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, colspan: 2, strong(entry.name)),
-        grid.cell(x: 2, y: 1, text(size: 9pt, entry.institution)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.date)),
-        grid.cell(x: 0, y: 1, if "description" in entry and entry.description != none {
-          text(size: 9pt, entry.description)
-        }),
-      )
-    })
-  }
-}
-
-#let conference-presentations(..entries) = {
-  context _section-heading("Conference Presentations", _cv-accent.get())
-  for entry in entries.pos() {
-    block(inset: (left: 1em, y: 0.25em), {
-      grid(
-        columns: (60%, 15%, 25%),
-        rows: 2,
-        column-gutter: 1em,
-        row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, strong(entry.name)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, align(bottom, entry.date))),
-        grid.cell(x: 2, y: 1, text(size: 9pt, entry.institution)),
-        grid.cell(x: 0, y: 1, text(size: 9pt, entry.event)),
-      )
-    })
-  }
+#let section(title, ..entries) = {
+  let rows-per-entry = 3
+  entries-block(..entries, title: title)
 }
 
 #let publications(bib-path, ..args) = {
-  context _section-heading("Publications", _cv-accent.get())
-  block(inset: (left: 1em, y: 0.25em), bibliography(bib-path, full: true, title: none, ..args))
+  block(inset: (y: 0.25em), grid(
+    columns: (11em, 1fr, 5em),
+    column-gutter: 1em,
+    text(size: 18pt, font: "Cronos Pro", smallcaps("Publications")),
+    bibliography(bib-path, full: true, title: none, ..args),
+  ))
 }
 
 #let grants-and-awards(..entries) = {
-  context _section-heading("Grants & Awards", _cv-accent.get())
   for entry in entries.pos() {
     block(inset: (left: 1em, y: 0.25em), {
       grid(
@@ -152,7 +84,6 @@
 }
 
 #let references(..entries) = {
-  context _section-heading("References", _cv-accent.get())
   for entry in entries.pos() {
     block(inset: (left: 1em, y: 0.25em), {
       grid(
@@ -170,14 +101,11 @@
 
 #let cv(
   name: "",
-  description: "",
   contact: (:),
   accent: rgb("#4a7c8e"),
   icon-path: none,
   body,
 ) = {
-  _cv-accent.update(_ => accent)
-
   show bibliography.where(full: true): it => {
     let last-name = name.split().last()
     show last-name: strong(last-name)
@@ -185,27 +113,25 @@
   }
 
   // Page
-  set page(
-    paper: "a4",
-    margin: 1.5cm,
-  )
-  set text(font: "Helvetica Neue", size: 10pt, fill: luma(20), tracking: 0.3pt)
+  set page(paper: "a4", margin: 1.5cm)
+  set text(font: "Helvetica Neue", size: 10pt, fill: luma(20), tracking: 0.15pt)
   set par(leading: 0.6em)
 
 
   grid(
-    columns: (70%, 5%, 25%),
+    columns: (3fr, 1fr),
     rows: contact.len(),
-    column-gutter: 1em,
-    row-gutter: 0.25em,
-    grid.cell(x: 0, y: 0, rowspan: contact.len(), align(horizon, stack(
-      dir: ttb,
-      spacing: 12pt,
-      text(size: 20pt, weight: "bold", name),
-      text(size: 10pt, description),
-    ))),
-    grid.cell(x: 2, y: 0, rowspan: contact.len(), _contact-line(contact, accent, icon-path))
+    column-gutter: 1.5em,
+    // the pad call is really unelegant and makes me unhappy :c
+    grid.cell(x: 0, y: 0, rowspan: contact.len(), align(bottom, pad(bottom: 0.3em, text(
+      size: 28pt,
+      font: "Calluna",
+      smallcaps(name),
+    )))),
+    grid.cell(x: 1, y: 0, rowspan: contact.len(), _contact-line(contact, accent, icon-path)),
   )
+
+  line(length: 100%, stroke: 0.5pt)
 
   body
 }
