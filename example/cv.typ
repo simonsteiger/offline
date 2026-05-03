@@ -85,23 +85,34 @@
   "Conferences",
   (
     name: "Neighbourhood deprivation drives villainry: new evidence from Gotham City",
-    event: "International Conference of Villains",
+    description: "International Conference of Villains, Gotham City",
     date: "2023",
-    institution: "Gotham City",
   ),
   (
     name: "Tricking superheroes: what you need to know",
-    event: "Congress of Deception",
+    description: "Congress of Deception, Arkham City",
     date: "2022",
-    institution: "Arkham City",
   ),
 )
 
-#references(
+#skills(
   (
-    name: "Joker",
-    title: "Prof. Dr.",
-    institution: "None of your business",
-    email: "iwillfindyou@first.com",
+    category: "Software",
+    content: list([HTML], [R], [Julia]),
+  ),
+  (
+    category: "Languages",
+    content: list([German], [English], [Swedish]),
+  ),
+)
+
+#pagebreak()
+
+#section(
+  "References",
+  (
+    name: "The Joker",
+    institution: "Criminal Mastermind Inc.",
+    description: "iwillfindyou@first.com",
   ),
 )

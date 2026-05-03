@@ -22,9 +22,10 @@
   for entry in entries.pos() {
     let has-description = "description" in entry and entry.description != none
     let has-institution = "institution" in entry and entry.institution != none
+    let has-date = "date" in entry and entry.date != none
 
     let title-text = strong(entry.name) + if has-institution { text(9pt, " | " + entry.institution) }
-    let date-text = align(right, text(9pt, entry.date))
+    let date-text = if has-date { align(right, text(9pt, entry.date)) } else { none }
     let description-text = if has-description { text(9pt, entry.description) } else { none }
 
     items.push(grid.cell(x: 1, y: (y - 1) * rows-per-entry, align(bottom, title-text)))
@@ -38,7 +39,7 @@
 }
 
 #let entries-block(..entries, title: none, rows-per-entry: 3) = {
-  block(inset: (y: 0.25em), {
+  block(inset: (top: 0.25em, bottom: 0.75em), {
     grid(
       columns: (11em, 1fr, 5em),
       rows: (rows-per-entry * entries.pos().len()) - 1,
@@ -56,7 +57,7 @@
 }
 
 #let publications(bib-path, ..args) = {
-  block(inset: (y: 0.25em), grid(
+  block(inset: (top: 0.25em, bottom: 0.75em), grid(
     columns: (11em, 1fr, 5em),
     column-gutter: 1em,
     text(size: 18pt, font: "Cronos Pro", smallcaps("Publications")),
@@ -64,40 +65,36 @@
   ))
 }
 
-#let grants-and-awards(..entries) = {
-  for entry in entries.pos() {
-    block(inset: (left: 1em, y: 0.25em), {
-      grid(
-        columns: (60%, 15%, 25%),
-        rows: 2,
-        column-gutter: 1em,
-        row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, strong(entry.title)),
-        grid.cell(x: 1, y: 0, text(size: 9pt, entry.amount)),
-        grid.cell(x: 2, y: 0, text(size: 9pt, entry.date)),
-        grid.cell(x: 0, y: 1, if "description" in entry and entry.description != none {
-          text(size: 9pt, entry.description)
-        }),
-      )
-    })
+#let build-skills-cols(..entries) = {
+  if entries.pos().len() > 3 {
+    panic("Only three skill columns are supported right now")
   }
+
+  let items = ()
+  let x = 1
+
+  for entry in entries.pos() {
+    items.push(grid.cell(x: x, y: 0, align(bottom, strong(entry.category))))
+    items.push(grid.cell(x: x, y: 1, text(9pt, entry.content)))
+    x += 1
+  }
+
+  items
 }
 
-#let references(..entries) = {
-  for entry in entries.pos() {
-    block(inset: (left: 1em, y: 0.25em), {
-      grid(
-        columns: 1,
-        rows: 3,
-        column-gutter: 1em,
-        row-gutter: 0.75em,
-        grid.cell(x: 0, y: 0, strong(entry.name) + ", " + entry.title),
-        grid.cell(x: 0, y: 1, text(size: 9pt, entry.institution)),
-        grid.cell(x: 0, y: 2, text(size: 9pt, entry.email)),
-      )
-    })
-  }
+#let skills(..entries) = {
+  block(inset: (top: 0.25em, bottom: 0.75em), {
+    grid(
+      columns: (11em, 1fr, 1fr, 1fr, 5em),
+      rows: 1,
+      column-gutter: 1em,
+      row-gutter: 0.75em,
+      grid.cell(x: 0, y: 0, text(size: 18pt, font: "Cronos Pro", smallcaps("Skills"))),
+      ..build-skills-cols(..entries),
+    )
+  })
 }
+
 
 #let cv(
   name: "",
