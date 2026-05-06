@@ -3,9 +3,9 @@
 #show: cv.with(
   name: "Solomon Grundy",
   contact: (
-    email: "solomon@grundy.xyz",
-    linkedin: "linkedin.com/in/steigers",
-    website: "www.bornonmonday.xyz",
+    email: link("mailto:solomon@grundy.xyz"),
+    linkedin: link("linkedin.com/in/steigers"),
+    website: link("www.bornonmonday.xyz"),
   ),
   accent: rgb("#4a7c8e"),
   icon-path: "example/icons/",
